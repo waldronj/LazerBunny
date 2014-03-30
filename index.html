@@ -1,0 +1,88 @@
+<!doctype html>
+<head>
+  <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000000;
+	    color: white;
+        }
+    </style>
+<script src="pixi.js"></script>
+</head>
+<body>
+<div style="padding:1em">
+<h1>Lazer Bunny</h1>
+</div>
+    <script>
+ 
+    // create an new instance of a pixi stage
+    var interactive = true;
+    var stage = new PIXI.Stage(0x66FF99, interactive);
+ 
+    // create a renderer instance.
+    var renderer = PIXI.autoDetectRenderer(1900, 800);
+    var graphics = new PIXI.Graphics();
+
+    var lazerTexture = PIXI.Texture.fromImage("lazer.jpg");
+    var lazers = [];
+    var lcounter = 0;    
+    var isFiring = false;
+    // create a texture from an image path
+    var texture = PIXI.Texture.fromImage("bunny.png");
+    // create a new Sprite using the texture
+    var bunny = new PIXI.Sprite(texture);  
+    // add the renderer view element to the DOM
+    document.body.appendChild(renderer.view);
+ 
+    requestAnimFrame( animate );
+ 
+
+    bunny.setInteractive(true);
+    // center the sprites anchor point
+    bunny.anchor.x = 0.5;
+    bunny.anchor.y = 0.5;
+    // move the sprite t the center of the screen
+    bunny.position.x = 400;
+    bunny.position.y = 250;
+    stage.addChild(bunny);
+   
+    //Events 
+    bunny.mousemove= function(mouseData){
+        var pos =  stage.getMousePosition();
+        console.log(pos);
+        bunny.position.x = pos.x;
+        bunny.position.y = pos.y;
+    }
+
+    bunny.mousedown = function(event){
+        isFiring = true;
+    }
+    bunny.mouseup = function(event){
+        ifFiring = false;
+    }
+
+
+    function animate() {
+        if(isFiring){
+            var lazer = new PIXI.Sprite(lazerTexture);
+            var pos = stage.getMousePosition();
+            lazer.anchor.x = 0.5;
+            lazer.anchor.y = 0.5;
+            lazer.position.x = pos.x + 100;
+            lazer.position.y = pos.y + 45;
+            lazers.push(lazer);
+            stage.addChild(lazer);
+            isFiring = false;
+        }
+        for (var i = 0; i < lazers.length; i++){
+            var lazer= lazers[i];
+            lazer.position.x += 10;
+        }
+        
+
+        requestAnimFrame( animate );
+        renderer.render(stage);
+    }
+</script>
+</body>
