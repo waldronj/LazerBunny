@@ -25,6 +25,7 @@
 <body>
 <div style="padding:1em">
 <h1>Lazer Bunny</h1>
+<p>Your mouse movement will move the rabbit around. Clicking on the Rabbit will cause a lazer to be fired.</p>
 </div>
     <script>
     createjs.Sound.alternateExtensions = ["mp3"];
@@ -36,7 +37,7 @@
     var stage = new PIXI.Stage(0x66FF99, interactive);
  
     // create a renderer instance.
-    var renderer = PIXI.autoDetectRenderer(1900, 800);
+    var renderer = PIXI.autoDetectRenderer(window.screen.availWidth -75 ,window.screen.availHeight - 250);
     var graphics = new PIXI.Graphics();
 
     var lazerTexture = PIXI.Texture.fromImage("lazer.jpg");
