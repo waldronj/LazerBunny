@@ -66,7 +66,6 @@
     //Events 
     bunny.mousemove= function(mouseData){
         var pos =  stage.getMousePosition();
-        console.log(pos);
         bunny.position.x = pos.x;
         bunny.position.y = pos.y;
     }
@@ -76,6 +75,12 @@
     }
     bunny.mouseup = function(event){
         ifFiring = false;
+    }
+    bunny.touchstart = function(event){
+        isFiring = true;
+    }
+    bunny.touchend = function(event){
+        isFiring = false;
     }
 
 
@@ -95,9 +100,11 @@
         for (var i = 0; i < lazers.length; i++){
             var lazer= lazers[i];
             lazer.position.x += 10;
+            if(lazer.position.x > stage.getBounds().x && i != 0){
+                lazers.splice(i, 1);
+            }
         }
         
-
         requestAnimFrame( animate );
         renderer.render(stage);
     }
